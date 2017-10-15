@@ -15,6 +15,7 @@ class RosindexScrapyItem(scrapy.Item):
 
 class PackageItem(scrapy.Item):
     name=scrapy.Field()
+    url=scrapy.Field()
     repository=scrapy.Field()
     ROS_system=scrapy.Field()
     dependency_packages=scrapy.Field()
@@ -25,7 +26,7 @@ class RepositoryItem(scrapy.Item):
     name=scrapy.Field()
     url= scrapy.Field()
     package_list=scrapy.Field()
-    ROS_system=scrapy.Field()
+    system_list=scrapy.Field()
     readme=scrapy.Field()
 
 class ROS_systemItem(scrapy.Item):

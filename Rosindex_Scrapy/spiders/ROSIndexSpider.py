@@ -7,7 +7,7 @@ from Rosindex_Scrapy.items import RepositoryItem,PackageItem,ROS_systemItem
 class RosindexspiderSpider(scrapy.Spider):
     name = 'ROSIndexSpider'
     #allowed_domains = ['http://rosindex.github.io']
-    start_urls = ['http://rosindex.github.io/repos/page/1/time/']
+    start_urls = ['http://rosindex.github.io/packages/page/1/time/']
 
     #def parse(self, response):
      #   pass
@@ -15,15 +15,15 @@ class RosindexspiderSpider(scrapy.Spider):
     def parse(self, response):
         print('one repos page  parsed')
         repository=RepositoryItem()
-        repos_links=response.xpath('//td/a[contains(@href,"/r/")]')
-        for link in repos_links:
+        links=response.xpath('//td/a[contains(@href,"/p/")]')
+        for link in links:
             repository['url']=link.xpath('@href').extract()
-            repository['name']=link.xpath('text()').extract()
-            print(repository['url'])
-            print(repository['name'])
+            #repository['name']=link.xpath('text()').extract()
+            #print(repository['url'])
+            #print(repository['name'])
             yield repository
 
-        """"
+        """" 
         with open('repos_links.csv', 'w') as csvfile:
             writer= csv.writer(csvfile)
             #writer.writerow(['repository name','url'])
@@ -33,13 +33,13 @@ class RosindexspiderSpider(scrapy.Spider):
                 print(repository['url'])
                 writer.writerow([format(repository['url'])])
         """
-        """"
+
         next_page=response.xpath('//li/a[contains(text(), "»")]/@href').extract()
         if next_page[0]!='#':
             yield scrapy.Request('http://rosindex.github.io'+next_page[0], callback=self.parse)
-        """
+
         """" 
-        package_links=response.xpath('//td/a[contains(@href,"/p/")]/@href').extract()
+        package_links=response.xpath('//div[1]/td/a[contains(@href,"/p/")]/@href').extract()
         print('packages links:')
         print(package_links)
         for link in package_links:
