@@ -32,7 +32,7 @@ class PackageSpider(scrapy.Spider):
         Package['url']= response.url
         name = set(response.xpath('//li[a/text()="Packages"]/following-sibling::*/text()').extract())
         Package['name'] = ','.join(name)
-        repos=response.xpath('//li/a[contains(@href,"/r/")]/text()').extract()
+        repos=response.xpath('//h3/small/a[contains(@href,"/r/")]/text()').extract()
         Package['repository'] = ','.join(set(repos))
         systems = set(response.xpath('//label[contains(@class,"btn-primary")]/@data').extract()\
                   +response.xpath("//li[@class = ' older-distro-option']/@data").extract())
@@ -51,7 +51,7 @@ class PackageSpider(scrapy.Spider):
         Package['dependant_packages']=','.join(dependent)
         readmeset=response.xpath('//div[text()=" README"]/following-sibling::*').extract()
         Package['readme'] = ','.join(set(readmeset)).strip('{}').encode('utf-8')
-        print(Package)
+        #print(Package)
         yield Package
         #"""
         #print('package page is parsed...')

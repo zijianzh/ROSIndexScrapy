@@ -4,7 +4,7 @@ import csv
 csv.field_size_limit(500 * 1024 * 1024)
 prefix = 'http://rosindex.github.io'
 urls=[]
-with open('repos_links.csv', 'r') as csvfile:
+with open('package_links.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
         field=''.join(row).strip("[]'")
@@ -12,7 +12,7 @@ with open('repos_links.csv', 'r') as csvfile:
         urls.append(url)
     #print(urls)
 
-with open('repos_items.csv','r') as csvfile:
+with open('package_items.csv','r') as csvfile:
     reader = csv.reader(csvfile)
     column = [row[1] for row in reader]
     #print(column)

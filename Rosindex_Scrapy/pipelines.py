@@ -58,7 +58,7 @@ class UrlsToCsv(object):
 from scrapy.exporters import CsvItemExporter
 class CsvPipeline(object):
     def __init__(self):
-        self.file = open("repos_items.csv", 'a+')
+        self.file = open("repos_items.csv", 'w+')
         self.exporter = CsvItemExporter(self.file)
         self.exporter.start_exporting()
 
@@ -132,7 +132,7 @@ class PackageCsvPipeline(object):
                              'dependency packages',
                              'dependant packages',
                              'readme']
-        self.csvfile = open('package_items.csv', 'a+')
+        self.csvfile = open('package_items.csv', 'w+')
         writer = csv.DictWriter(self.csvfile, fieldnames=self.repos_fields)
         writer.writeheader()
 
@@ -146,6 +146,7 @@ class PackageCsvPipeline(object):
         #README = readme.encode('utf-8')
         writer.writerow({'name': ''.join(item['name']),
                          'url': item['url'],
+                         'repository': item['repository'],
                          'system list': item['system_list'],
                          'dependency packages': item['dependency_packages'],
                          'dependant packages': item['dependant_packages'],
