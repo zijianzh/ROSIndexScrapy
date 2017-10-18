@@ -1,0 +1,33 @@
+import sys
+import csv
+#""""
+csv.field_size_limit(500 * 1024 * 1024)
+prefix = 'http://rosindex.github.io'
+urls=[]
+with open('repos_links.csv', 'r') as csvfile:
+    reader = csv.reader(csvfile)
+    for row in reader:
+        field=''.join(row).strip("[]'")
+        url=prefix+''.join(field)+'/'
+        urls.append(url)
+    #print(urls)
+
+with open('repos_items.csv','r') as csvfile:
+    reader = csv.reader(csvfile)
+    column = [row[1] for row in reader]
+    #print(column)
+
+rest=list(set(urls)-set(column))
+rest.sort(key=urls.index)
+for l in rest:
+    print(l)
+print(len(rest))
+"""
+url='http://rosindex.github.io/r/agvs_common/'
+prefix = 'http://rosindex.github.io/r/'
+print(len(prefix))
+name=url[len(prefix)-1:].strip('/')
+print(name)
+
+"""
+
